@@ -66,9 +66,9 @@ class MenuCategoryController extends Controller
         return redirect()->route('menu-categories.index')->with('success', 'Category updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // TODO : Perlu dibenerin
+    // Tidak bisa menghapus Menu Kategori secara langsung
+    // Karena terika dengan Menu
     public function destroy(MenuCategory $categories)
     {
         $categories->delete();
