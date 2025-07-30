@@ -14,27 +14,21 @@ class EmployeeShiftSeeder extends Seeder
      */
     public function run(): void
     {
-        $chef = Employee::where('name', 'Chef Fuad')->first();
-        $waiter = Employee::where('name', 'Waiter Azkal')->first();
 
-        if ($chef) {
-            EmployeeShift::create([
-                'employee_id' => $chef->id,
-                'shift_date' => now()->toDateString(),
-                'start_time' => '09:00:00',
-                'end_time' => '17:00:00',
-                'shift_type' => 'morning',
-            ]);
-        }
+        // TODO : Urgent
+        // bagian shift date nanti harus diubah agar pengisian tanggal bisa manual
+        EmployeeShift::create([
+            'shift_date' => now()->toDateString(),
+            'start_time' => '09:00:00',
+            'end_time' => '17:00:00',
+            'shift_type' => 'morning',
+        ]);
 
-        if ($waiter) {
-            EmployeeShift::create([
-                'employee_id' => $waiter->id,
-                'shift_date' => now()->toDateString(),
-                'start_time' => '15:00:00',
-                'end_time' => '23:00:00',
-                'shift_type' => 'evening',
-            ]);
-        }
+        EmployeeShift::create([
+            'shift_date' => now()->toDateString(),
+            'start_time' => '15:00:00',
+            'end_time' => '23:00:00',
+            'shift_type' => 'evening',
+        ]);
     }
 }
