@@ -14,7 +14,6 @@ class Menu extends Model
 
     public function menu_category()
     {
-        return $this->belongsTo(MenuCategory::class, 'menu_category_id')
-            ->withDefault(['name' => 'Tidak Ada Kategori']);
+        return $this->belongsTo(MenuCategory::class, 'menu_category_id');
     }
 }

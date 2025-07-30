@@ -66,12 +66,15 @@ class MenuCategoryController extends Controller
         return redirect()->route('menu-categories.index')->with('success', 'Category updated');
     }
 
-    // TODO : Perlu dibenerin
-    // Tidak bisa menghapus Menu Kategori secara langsung
-    // Karena terika dengan Menu
-    public function destroy(MenuCategory $categories)
+    public function destroy(MenuCategory $menuCategory)
     {
-        $categories->delete();
-        return back()->with('success', 'Category Deleted');
+        // $menuCategory->delete();
+        // return back()->ith('success', 'Category Deleted');
+        try {
+            $menuCategory->delete();
+            return back()->with('success', 'Category deleted. All related menu items were uncategorized.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal menghapus kategori: ' . $e->getMessage());
+        }
     }
 }
