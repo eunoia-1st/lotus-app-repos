@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\MenuCategoryController;
+use App\Http\Controllers\Admin\QuestionCategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,3 +24,7 @@ Route::put('employees/{employee}/details', [EmployeeController::class, 'updateDe
 
 // Customers
 Route::resource('customers', CustomerController::class);
+
+// Question
+Route::resource('question-categories', QuestionCategoryController::class);
+Route::patch('/question-categories/{category}/toggle', [QuestionCategoryController::class, 'togglePublish'])->name('question-categories.toggle');
