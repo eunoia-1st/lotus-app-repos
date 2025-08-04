@@ -20,8 +20,7 @@ return new class extends Migration
             $table->string('question_text');
             $table->enum('question_type', [
                 'text',
-                'rating',
-                'radio',
+                'option',
                 'checkbox',
             ]);
             $table->timestamps();

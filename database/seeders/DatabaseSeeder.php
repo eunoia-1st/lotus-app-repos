@@ -2,9 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Database\Seeders\MenuSeeder;
+use Database\Seeders\SeatSeeder;
+use Database\Seeders\AdminSeeder;
+use Database\Seeders\CustomerSeeder;
+use Database\Seeders\EmployeeSeeder;
+use Database\Seeders\MenuCategorySeeder;
+use Database\Seeders\EmployeeShiftSeeder;
+use Database\Seeders\QuestionSeeder;
+use Database\Seeders\QuestionCategorySeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,7 +37,6 @@ class DatabaseSeeder extends Seeder
             SeatSeeder::class,
             QuestionCategorySeeder::class,
             QuestionSeeder::class,
-            QuestionOptionSeeder::class,
             MenuCategorySeeder::class,
             MenuSeeder::class
         ]);

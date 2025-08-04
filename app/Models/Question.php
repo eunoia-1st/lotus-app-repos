@@ -14,7 +14,7 @@ class Question extends Model
 
     public function question_options()
     {
-        return $this->belongsToMany(QuestionOption::class, 'question_option_pivot', 'question_id', 'option_id');
+        return $this->hasMany(QuestionOption::class, 'question_id');
     }
 
     public function question_category()
