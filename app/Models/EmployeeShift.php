@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeShift extends Model
 {
     protected $fillable = [
-        'shift_date',
+        'employee_id',
+        'day',
         'start_time',
         'end_time',
         'shift_type'
     ];
 
-    public function employees()
+    public function employee()
     {
-        return $this->belongsToMany(Employee::class, 'employee_shift_pivot', 'shift_id', 'employee_id');
+        return $this->belongsTo(Employee::class, 'employee_id');
     }
 }

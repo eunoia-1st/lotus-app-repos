@@ -13,15 +13,26 @@ return new class extends Migration
     {
         Schema::create('employee_shifts', function (Blueprint $table) {
             $table->id();
-            $table->date('shift_date');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->foreignId('employee_id')
+                ->constrained('employees')
+                ->onDelete('cascade');
+            $table->enum('day', [
+                'monday',
+                'tuesday',
+                'wednesday',
+                'thursday',
+                'friday',
+                'saturday',
+                'sunday'
+            ]);
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->enum('shift_type', [
                 'morning',
                 'evening',
-                'middle',
                 'split',
-            ]);
+                'middle'
+            ])->nullable();
             $table->timestamps();
         });
     }
