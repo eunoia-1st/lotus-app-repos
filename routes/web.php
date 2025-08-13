@@ -1,17 +1,23 @@
 <?php
 
 use App\Models\Employee;
+use App\Models\Feedback;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\Admin\MenuCategoryController;
+use App\Http\Controllers\Admin\QuestionOptionController;
+use App\Http\Controllers\Customer\FeedbackFormController;
 use App\Http\Controllers\Admin\QuestionCategoryController;
+use App\Http\Controllers\Customer\FeedbackAnswerController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+// == Halaman Admin ==
 Route::resource('menus', MenuController::class);
 Route::resource('menu-categories', MenuCategoryController::class);
 
@@ -28,3 +34,44 @@ Route::resource('customers', CustomerController::class);
 // Question
 Route::resource('question-categories', QuestionCategoryController::class);
 Route::patch('/question-categories/{category}/toggle', [QuestionCategoryController::class, 'togglePublish'])->name('question-categories.toggle');
+
+// Tampilkan semua pertanyaan dalam kategori
+Route::get('/questions/category/{category}', [QuestionController::class, 'index'])->name('questions.index');
+
+// Form tambah pertanyaan
+Route::get('/questions/category/{category}/create', [QuestionController::class, 'create'])->name('questions.create');
+
+// Simpan pertanyaan baru
+Route::post('/questions/category/{category}', [QuestionController::class, 'store'])->name('questions.store');
+
+// Form edit
+Route::get('/questions/{id}/edit', [QuestionController::class, 'edit'])->name('questions.edit');
+
+// Update pertanyaan
+Route::put('/questions/{id}', [QuestionController::class, 'update'])->name('questions.update');
+
+// Hapus pertanyaan
+Route::delete('/questions/{id}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+
+Route::prefix('questions/{question}/options')->group(function () {
+    Route::get('/', [QuestionOptionController::class, 'index'])->name('question-options.index');
+    Route::get('/create', [QuestionOptionController::class, 'create'])->name('question-options.create');
+    Route::post('/', [QuestionOptionController::class, 'store'])->name('question-options.store');
+    Route::get('/{option}/edit', [QuestionOptionController::class, 'edit'])->name('question-options.edit');
+    Route::put('/{option}', [QuestionOptionController::class, 'update'])->name('question-options.update');
+    Route::delete('/{option}', [QuestionOptionController::class, 'destroy'])->name('question-options.destroy');
+});
+
+// List Feedback yang terjawab
+Route::get('feedback-answers', [FeedbackAnswerController::class, 'index'])->name('feedback-answers.index');
+Route::get('feedback-answers/{id}', [FeedbackAnswerController::class, 'show'])->name('feedback-answers.show');
+
+// == Halaman Customer ==
+
+// Pilihan Kategori feedback
+Route::get('/feedback', [FeedbackFormController::class, 'showCategories'])->name('feedback.categories');
+Route::get('/feedback/success', function () {
+    return view('feedback_forms.thankyou');
+})->name('feedback.success');
+Route::get('/feedback/{category}', [FeedbackFormController::class, 'showQuestions'])->name('feedback.questions');
+Route::post('/feedback/{category}/submit', [FeedbackFormController::class, 'submit'])->name('feedback.submit');

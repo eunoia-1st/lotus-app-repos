@@ -12,6 +12,7 @@
             <th>ID</th>
             <th>Nama</th>
             <th>Published</th>
+            <th>Pertanyaan</th>
             <th>Aksi</th>
         </tr>
     </thead>
@@ -21,6 +22,12 @@
                 <td>{{ $category->id }}</td>
                 <td>{{ $category->name }}</td>
                 <td>{{ $category->is_published ? 'Ya' : 'Tidak' }}</td>
+
+                {{-- Kolom Link ke Pertanyaan --}}
+                <td>
+                    <a href="{{ route('questions.index', $category->id) }}">Lihat Pertanyaan</a>
+                </td>
+
                 <td>
                     {{-- Tombol Toggle --}}
                     <form action="{{ route('question-categories.toggle', $category) }}" method="POST"
