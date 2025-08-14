@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Customer;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -34,9 +35,34 @@ class CustomerController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Menampilkan Feedback yang telah diisi sesuai Customer
      */
-    public function show(string $id) {}
+    public function showFeedbacks(string $id)
+    {
+        $customer = Customer::findOrFail($id);
+
+        $feedbacks = Feedback::with([
+            'answers.question.question_category'
+        ])
+            ->where('customer_id', $customer->id)
+            ->latest()
+            ->get();
+
+        return view('customers.feedbacks', compact('customer', 'feedbacks'));
+    }
+
+    public function feedbackDetail($id)
+    {
+        $feedbackDetail = Feedback::with([
+            'answers.question.question_category',
+            'answers.question.question_options',
+            'customer',
+            'seat',
+            'employees.employee_shifts'
+        ])->findOrFail($id);
+
+        return view('customers.feedbackDetail', compact('feedbackDetail'));
+    }
 
     /**
      * Show the form for editing the specified resource.

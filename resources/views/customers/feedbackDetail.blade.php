@@ -1,15 +1,15 @@
 <h2>Detail Feedback</h2>
 
-<p><strong>Customer:</strong> {{ $feedbackAnswer->customer->name ?? 'Anonim' }}</p>
-<p><strong>Phone:</strong> {{ $feedbackAnswer->customer->phone ?? '-' }}</p>
-<p><strong>Email:</strong> {{ $feedbackAnswer->customer->email ?? '-' }}</p>
-<p><strong>Seat:</strong> {{ $feedbackAnswer->seat->name ?? '-' }}</p>
-<p><strong>Tanggal Submit:</strong> {{ $feedbackAnswer->created_at->format('d-m-Y H:i') }}</p>
+<p><strong>Customer:</strong> {{ $feedbackDetail->customer->name ?? 'Anonim' }}</p>
+<p><strong>Phone:</strong> {{ $feedbackDetail->customer->phone ?? '-' }}</p>
+<p><strong>Email:</strong> {{ $feedbackDetail->customer->email ?? '-' }}</p>
+<p><strong>Seat:</strong> {{ $feedbackDetail->seat->name ?? '-' }}</p>
+<p><strong>Tanggal Submit:</strong> {{ $feedbackDetail->created_at->format('d-m-Y H:i') }}</p>
 <p><strong>Karyawan Yang Bekerja:</strong></p>
 
 @php
     // Mengelompokkan employees berdasarkan posisi
-    $groupedEmployees = $feedbackAnswer->employees->groupBy('position');
+    $groupedEmployees = $feedbackDetail->employees->groupBy('position');
 @endphp
 
 @forelse ($groupedEmployees as $position => $employees)
@@ -33,7 +33,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($feedbackAnswer->answers as $answer)
+        @foreach ($feedbackDetail->answers as $answer)
             <tr>
                 <td>{{ $answer->question->question_category->name }}</td>
                 <td>{{ $answer->question->question_text }}</td>
@@ -66,4 +66,4 @@
 </table>
 
 <br>
-<a href="{{ route('feedback-answers.index') }}">← Kembali</a>
+<a href="{{ route('customers.feedbacks', $feedbackDetail->customer_id) }}">← Kembali</a>

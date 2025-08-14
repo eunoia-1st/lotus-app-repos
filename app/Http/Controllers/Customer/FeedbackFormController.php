@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Customer;
 use App\Models\Seat;
 use App\Models\Answer;
 use App\Models\Customer;
+use App\Models\Employee;
 use App\Models\Feedback;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use App\Models\EmployeeFeedback;
 use App\Models\QuestionCategory;
 use App\Http\Controllers\Controller;
 
@@ -112,6 +114,37 @@ class FeedbackFormController extends Controller
             }
         }
 
+        $feedbackTime = now();
+        $dayName = $feedbackTime->format('l');
+        $currentTime = $feedbackTime->format('H:i:s');
+
+        $employees = Employee::whereHas('employee_shifts', function ($query) use ($dayName, $currentTime) {
+            $query->where('day', $dayName)
+                ->where(function ($q) use ($currentTime) {
+                    // Shift normal
+                    $q->where(function ($normal) use ($currentTime) {
+                        $normal->whereTime('start_time', '<=', $currentTime)
+                            ->whereTime('end_time', '>=', $currentTime);
+                    });
+
+                    // Shift melewati tengah malam
+                    $q->orWhere(function ($overnight) use ($currentTime) {
+                        $overnight->whereRaw('TIME(start_time) > TIME(end_time)')
+                            ->where(function ($inner) use ($currentTime) {
+                                $inner->whereTime('start_time', '<=', $currentTime)
+                                    ->orWhereTime('end_time', '>=', $currentTime);
+                            });
+                    });
+                });
+        })->get();
+
+
+        foreach ($employees as $employee) {
+            EmployeeFeedback::create([
+                'employee_id' => $employee->id,
+                'feedback_id' => $feedback->id,
+            ]);
+        }
 
         return redirect()->route('feedback.success'); // buatkan route success jika perlu
     }

@@ -18,7 +18,7 @@
                 <td>{{ $cust->phone }}</td>
                 <td>{{ $cust->address }}</td>
                 <td>
-                    <a href="#">Show</a>
+                    <a href="{{ route('customers.feedbacks', $cust->id) }}">Show</a>
                     <a href="{{ route('customers.edit', $cust->id) }}">Edit</a>
                     <form method="POST" action="{{ route('customers.destroy', $cust->id) }}" style="display:inline;">
                         @csrf

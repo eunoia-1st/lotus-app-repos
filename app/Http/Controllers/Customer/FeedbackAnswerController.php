@@ -25,7 +25,8 @@ class FeedbackAnswerController extends Controller
             'answers.question.question_category',
             'answers.question.question_options',
             'customer',
-            'seat'
+            'seat',
+            'employees.employee_shifts'
         ])->findOrFail($id);
 
         return view('feedback_answers.show', compact('feedbackAnswer'));

@@ -30,6 +30,8 @@ Route::put('employees/{employee}/details', [EmployeeController::class, 'updateDe
 
 // Customers
 Route::resource('customers', CustomerController::class);
+Route::get('/customers/{id}/feedbacks', [CustomerController::class, 'showFeedbacks'])->name('customers.feedbacks');
+Route::get('customers/{id}/feedbackDetail', [CustomerController::class, 'feedbackDetail'])->name('customers.feedbackDetail');
 
 // Question
 Route::resource('question-categories', QuestionCategoryController::class);

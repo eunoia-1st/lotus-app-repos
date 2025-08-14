@@ -13,14 +13,57 @@ class EmployeeSeeder extends Seeder
      */
     public function run(): void
     {
+        // Cook
         Employee::create([
-            'name' => 'Chef Fuad',
+            'name' => 'Fuad',
             'position' => 'cook',
         ]);
 
         Employee::create([
-            'name' => 'Waiter Azkal',
+            'name' => 'Maruf',
+            'position' => 'cook',
+        ]);
+
+        Employee::create([
+            'name' => 'Andi',
+            'position' => 'cook',
+        ]);
+
+        Employee::create([
+            'name' => 'Ahmad',
+            'position' => 'cook',
+        ]);
+
+        // Waiter
+        Employee::create([
+            'name' => 'Azkal',
             'position' => 'waiter',
+        ]);
+
+        Employee::create([
+            'name' => 'Tono',
+            'position' => 'waiter',
+        ]);
+
+        Employee::create([
+            'name' => 'Tina',
+            'position' => 'waiter',
+        ]);
+
+        Employee::create([
+            'name' => 'Imam',
+            'position' => 'waiter',
+        ]);
+
+        // Office
+        Employee::create([
+            'name' => 'Mahmud',
+            'position' => 'office',
+        ]);
+
+        Employee::create([
+            'name' => 'Andika',
+            'position' => 'office',
         ]);
     }
 }

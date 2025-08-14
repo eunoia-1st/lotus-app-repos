@@ -16,11 +16,12 @@ class Employee extends Model
 
     public function employee_shifts()
     {
-        return $this->hasMany(EmployeeShift::class,  'employee_id');
+        return $this->hasMany(EmployeeShift::class);
     }
 
     public function feedbacks()
     {
-        return $this->belongsToMany(Feedback::class, 'employee_feedbacks', 'employee_id', 'feedback_id')->withTimestamps();
+        return $this->belongsToMany(Feedback::class, 'employee_feedbacks')
+            ->withTimestamps();
     }
 }

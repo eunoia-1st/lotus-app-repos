@@ -29,7 +29,8 @@ class Feedback extends Model
 
     public function employees()
     {
-        return $this->belongsToMany(Employee::class, 'employee_feedbacks', 'feedback_id', 'employee_id')->withTimestamps();
+        return $this->belongsToMany(Employee::class, 'employee_feedbacks')
+            ->with('employee_shifts');
     }
 
     public function seat()

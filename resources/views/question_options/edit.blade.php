@@ -23,4 +23,7 @@
     <input type="text" name="question_value" value="{{ $questionOption->question_value }}"><br><br>
 
     <button type="submit">Update</button>
+    <a href="{{ route('question-options.index', ['question' => $questionOption->question_id]) }}">
+        <button type="button">Cancel</button>
+    </a>
 </form>
