@@ -1,24 +1,43 @@
-<h1>Tambah Kategori Baru</h1>
+@extends('layouts.admin_layout')
 
-@if ($errors->any())
-    <ul style="color:red">
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-@endif
+@section('title', 'Tambah Kategori')
 
-<form action="{{ route('question-categories.store') }}" method="POST">
-    @csrf
-    <label>Nama Kategori:</label><br>
-    <input type="text" name="name" value="{{ old('name') }}"><br><br>
+@section('content')
+    <div class="card">
+        <div class="card-header">
+            <h2>Tambah Kategori Baru</h2>
+        </div>
+        <div class="card-body">
+            {{-- Tampilkan error --}}
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-    <label>
-        <input type="checkbox" name="is_published" {{ old('is_published') ? 'checked' : '' }}>
-        Published
-    </label><br><br>
+            <form action="{{ route('question-categories.store') }}" method="POST">
+                @csrf
+                <div class="form-group mb-3">
+                    <label for="name">Nama Kategori:</label>
+                    <input type="text" id="name" name="name" class="form-control" value="{{ old('name') }}"
+                        required>
+                </div>
 
-    <button type="submit">Simpan</button>
-</form>
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="is_published" name="is_published"
+                        {{ old('is_published') ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_published">
+                        Published
+                    </label>
+                </div>
 
-<a href="{{ route('question-categories.index') }}">Kembali</a>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                <a href="{{ route('question-categories.index') }}" class="btn btn-secondary">Kembali</a>
+            </form>
+        </div>
+    </div>
+@endsection

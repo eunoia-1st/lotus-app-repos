@@ -1,29 +1,48 @@
-<h1>Edit Opsi Pertanyaan</h1>
+@extends('layouts.admin_layout')
 
-@if ($errors->any())
-    <ul style="color:red">
-        @foreach ($errors->all() as $err)
-            <li>{{ $err }}</li>
-        @endforeach
-    </ul>
-@endif
+@section('content')
+    <div class="card">
+        <div class="card-header">
+            <h3>Edit Opsi Pertanyaan</h3>
+        </div>
+        <div class="card-body">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $err)
+                            <li>{{ $err }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-<form
-    action="{{ route('question-options.update', ['question' => $questionOption->question_id, 'option' => $questionOption->id]) }}"
-    method="POST">
+            <form
+                action="{{ route('question-options.update', ['question' => $questionOption->question_id, 'option' => $questionOption->id]) }}"
+                method="POST">
+                @csrf
+                @method('PUT')
 
-    @csrf
-    @method('PUT')
+                <div class="mb-3">
+                    <label class="form-label">Pertanyaan</label>
+                    <input type="text" class="form-control" value="{{ $questionOption->question->question_text ?? '-' }}"
+                        disabled>
+                    <input type="hidden" name="question_id" value="{{ $questionOption->question_id }}">
+                </div>
 
-    <label>Pertanyaan:</label><br>
-    <input type="text" value="{{ $questionOption->question->question_text ?? '-' }}" disabled><br><br>
-    <input type="hidden" name="question_id" value="{{ $questionOption->question_id }}">
+                <div class="mb-3">
+                    <label class="form-label">Isi Opsi</label>
+                    <input type="text" name="question_value" class="form-control"
+                        value="{{ $questionOption->question_value }}">
+                </div>
 
-    <label>Isi Opsi:</label><br>
-    <input type="text" name="question_value" value="{{ $questionOption->question_value }}"><br><br>
-
-    <button type="submit">Update</button>
-    <a href="{{ route('question-options.index', ['question' => $questionOption->question_id]) }}">
-        <button type="button">Cancel</button>
-    </a>
-</form>
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('question-options.index', ['question' => $questionOption->question_id]) }}"
+                        class="btn btn-secondary me-2">
+                        Batal
+                    </a>
+                    <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+@endsection
